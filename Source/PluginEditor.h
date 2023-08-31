@@ -29,6 +29,7 @@ private:
     // access the processor object that created it.
     DisTorchicAudioProcessor& audioProcessor;
     
+    ScopeComponent<float> scopeComponent;
     juce::ToggleButton distortionToggle {"distortion enabled"};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DisTorchicAudioProcessorEditor)

@@ -11,14 +11,14 @@
 
 //==============================================================================
 DisTorchicAudioProcessorEditor::DisTorchicAudioProcessorEditor (DisTorchicAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+    : AudioProcessorEditor (&p), audioProcessor (p), scopeComponent (audioProcessor.getAudioBufferQueue())
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize (400, 400);
     
     addAndMakeVisible (distortionToggle);
-    distortionToggle.setTopLeftPosition(100, 100);
+    distortionToggle.setTopLeftPosition(100, 70);
     distortionToggle.setSize(50, 50);
     distortionToggle.changeWidthToFitText();
     distortionToggle.addMouseListener (this, true);
@@ -27,6 +27,12 @@ DisTorchicAudioProcessorEditor::DisTorchicAudioProcessorEditor (DisTorchicAudioP
     distortionToggle.onClick = [this] {
         audioProcessor.setDistortionEnabled(distortionToggle.getToggleState());
     };
+    
+    addAndMakeVisible (scopeComponent);
+
+    auto area = getLocalBounds();
+    scopeComponent.setTopLeftPosition (0, 125);
+    scopeComponent.setSize (area.getWidth(), area.getHeight() - 175);
 }
 
 DisTorchicAudioProcessorEditor::~DisTorchicAudioProcessorEditor()

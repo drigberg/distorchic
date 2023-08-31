@@ -129,6 +129,11 @@ bool DisTorchicAudioProcessor::isBusesLayoutSupported (const BusesLayout& layout
 }
 #endif
 
+
+void DisTorchicAudioProcessor::reset () {
+    fxChain.reset();
+}
+
 void DisTorchicAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
@@ -153,13 +158,14 @@ void DisTorchicAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
-
-        // ..do something to the data...
+        juce::ignoreUnused (channelData);
     }
-    
-    dsp::AudioBlock<float> block (buffer);
-    dsp::ProcessContextReplacing<float> context (block);
-    fxChain.process (context);
+        
+    auto block = dsp::AudioBlock<float> (buffer);
+    auto context = dsp::ProcessContextReplacing<float> (block);
+    fxChain.process(context);
+    scopeDataCollector.process (buffer.getReadPointer(0), (size_t) buffer.getNumSamples());
+
 }
 
 //==============================================================================
@@ -190,6 +196,11 @@ void DisTorchicAudioProcessor::setStateInformation (const void* data, int sizeIn
 void DisTorchicAudioProcessor::setDistortionEnabled (bool enabled) {
     fxChain.setBypassed<0>(!enabled);
 }
+
+AudioBufferQueue<float>& DisTorchicAudioProcessor::getAudioBufferQueue() noexcept {
+    return audioBufferQueue;
+}
+
 
 //==============================================================================
 // This creates new instances of the plugin..
