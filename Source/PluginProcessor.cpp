@@ -93,8 +93,8 @@ void DisTorchicAudioProcessor::changeProgramName (int index, const juce::String&
 //==============================================================================
 void DisTorchicAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    dsp::ProcessSpec spec { sampleRate, static_cast<juce::uint32> (samplesPerBlock), 2 };
+    fxChain.prepare (spec);
 }
 
 void DisTorchicAudioProcessor::releaseResources()
@@ -156,6 +156,10 @@ void DisTorchicAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
 
         // ..do something to the data...
     }
+    
+    dsp::AudioBlock<float> block (buffer);
+    dsp::ProcessContextReplacing<float> context (block);
+    fxChain.process (context);
 }
 
 //==============================================================================
@@ -181,6 +185,10 @@ void DisTorchicAudioProcessor::setStateInformation (const void* data, int sizeIn
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+}
+
+void DisTorchicAudioProcessor::setDistortionEnabled (bool enabled) {
+    fxChain.setBypassed<0>(!enabled);
 }
 
 //==============================================================================

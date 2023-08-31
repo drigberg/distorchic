@@ -16,6 +16,17 @@ DisTorchicAudioProcessorEditor::DisTorchicAudioProcessorEditor (DisTorchicAudioP
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (400, 300);
+    
+    addAndMakeVisible (distortionToggle);
+    distortionToggle.setTopLeftPosition(100, 100);
+    distortionToggle.setSize(50, 50);
+    distortionToggle.changeWidthToFitText();
+    distortionToggle.addMouseListener (this, true);
+    distortionToggle.setToggleState(true, 0);
+    
+    distortionToggle.onClick = [this] {
+        audioProcessor.setDistortionEnabled(distortionToggle.getToggleState());
+    };
 }
 
 DisTorchicAudioProcessorEditor::~DisTorchicAudioProcessorEditor()
