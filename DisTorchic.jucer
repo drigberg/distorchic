@@ -5,8 +5,7 @@
               companyName="drigberg" pluginFormats="buildAU,buildVST3" pluginVST3Category="Distortion">
   <MAINGROUP id="eHja75" name="DisTorchic">
     <GROUP id="{05F3DF5B-ECC7-B074-4D4C-0EE21F8FC990}" name="Resources">
-      <FILE id="ZUnhxb" name="torchic-2.png" compile="0" resource="1" file="../../../../Downloads/torchic-2.png"/>
-      <FILE id="jlOLKj" name="torchic.png" compile="0" resource="1" file="../../../../Downloads/torchic.png"/>
+      <FILE id="ZUnhxb" name="torchic.png" compile="0" resource="1" file="../../../../Downloads/torchic.png"/>
     </GROUP>
     <GROUP id="{DFCD1E1B-96D2-78C5-0303-879D11C32AFD}" name="Source">
       <FILE id="TjGL2c" name="PluginProcessor.cpp" compile="1" resource="0"

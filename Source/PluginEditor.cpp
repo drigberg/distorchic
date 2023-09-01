@@ -51,7 +51,7 @@ void DisTorchicAudioProcessorEditor::paint (juce::Graphics& g)
     g.setFont (45.0f);
     g.drawFittedText ("DisTorchic", 20, 20, 200, 20, juce::Justification::horizontallyCentred, 1);
     
-    Image torchic = ImageCache::getFromMemory (BinaryData::torchic2_png, BinaryData::torchic2_pngSize);
+    Image torchic = ImageCache::getFromMemory (BinaryData::torchic_png, BinaryData::torchic_pngSize);
     g.drawImageAt (torchic, 250, 10);
 }
 
