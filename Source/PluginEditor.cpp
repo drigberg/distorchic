@@ -9,16 +9,18 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+using namespace juce;
+
 //==============================================================================
 DisTorchicAudioProcessorEditor::DisTorchicAudioProcessorEditor (DisTorchicAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p), scopeComponent (audioProcessor.getAudioBufferQueue())
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 400);
+    setSize (450, 700);
     
     addAndMakeVisible (distortionToggle);
-    distortionToggle.setTopLeftPosition(100, 70);
+    distortionToggle.setTopLeftPosition(25, 70);
     distortionToggle.setSize(50, 50);
     distortionToggle.changeWidthToFitText();
     distortionToggle.addMouseListener (this, true);
@@ -31,8 +33,8 @@ DisTorchicAudioProcessorEditor::DisTorchicAudioProcessorEditor (DisTorchicAudioP
     addAndMakeVisible (scopeComponent);
 
     auto area = getLocalBounds();
-    scopeComponent.setTopLeftPosition (0, 125);
-    scopeComponent.setSize (area.getWidth(), area.getHeight() - 175);
+    scopeComponent.setTopLeftPosition (0, 300);
+    scopeComponent.setSize (area.getWidth(), area.getHeight() - 350);
 }
 
 DisTorchicAudioProcessorEditor::~DisTorchicAudioProcessorEditor()
@@ -48,6 +50,9 @@ void DisTorchicAudioProcessorEditor::paint (juce::Graphics& g)
     g.setColour (juce::Colours::white);
     g.setFont (45.0f);
     g.drawFittedText ("DisTorchic", 20, 20, 200, 20, juce::Justification::horizontallyCentred, 1);
+    
+    Image torchic = ImageCache::getFromMemory (BinaryData::torchic2_png, BinaryData::torchic2_pngSize);
+    g.drawImageAt (torchic, 250, 10);
 }
 
 void DisTorchicAudioProcessorEditor::resized()

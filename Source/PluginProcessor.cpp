@@ -164,6 +164,8 @@ void DisTorchicAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     auto block = dsp::AudioBlock<float> (buffer);
     auto context = dsp::ProcessContextReplacing<float> (block);
     fxChain.process(context);
+//    auto outputBlock = context.getOutputBlock();
+//    scopeDataCollector.process(outputBlock.getChannelPointer(0),  (size_t) outputBlock.getNumSamples());
     scopeDataCollector.process (buffer.getReadPointer(0), (size_t) buffer.getNumSamples());
 
 }
