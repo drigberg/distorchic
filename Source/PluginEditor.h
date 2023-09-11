@@ -14,7 +14,7 @@
 //==============================================================================
 /**
 */
-class DisTorchicAudioProcessorEditor  : public juce::AudioProcessorEditor
+class DisTorchicAudioProcessorEditor  : public juce::AudioProcessorEditor, public juce::Slider::Listener
 {
 public:
     DisTorchicAudioProcessorEditor (DisTorchicAudioProcessor&);
@@ -23,6 +23,8 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
+    void sliderValueChanged (juce::Slider* slider) override;
+
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -31,6 +33,10 @@ private:
     
     ScopeComponent<float> scopeComponent;
     juce::ToggleButton distortionToggle {"distortion enabled"};
+    juce::Slider preGainSlider;
+    juce::Label  preGainSliderLabel;
+    juce::Slider postGainSlider;
+    juce::Label  postGainSliderLabel;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DisTorchicAudioProcessorEditor)
 };

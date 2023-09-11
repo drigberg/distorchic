@@ -22,16 +22,9 @@ public:
         auto& waveshaper = processorChain.template get<waveshaperIndex>();
         waveshaper.functionToUse = [] (Type x)
                                     {
-                                       return juce::jlimit (Type (-0.1), Type (0.1), x); // [6]
-//                                        return juce::jmap
-//                                        return std::tanh(x);
+                                       return juce::jlimit (Type (-0.1), Type (0.1), x);
+                                       // return std::tanh(x);
                                    };
-        
-        auto& preGain = processorChain.template get<preGainIndex>();   // [5]
-        preGain.setGainDecibels (25.0f);                               // [6]
- 
-        auto& postGain = processorChain.template get<postGainIndex>(); // [7]
-        postGain.setGainDecibels (0.0f);
     }
 
     //==============================================================================
@@ -52,6 +45,16 @@ public:
     //==============================================================================
     void reset() noexcept {
         processorChain.reset();
+    }
+    
+    void setPreGain(float value) {
+        auto& preGain = processorChain.template get<preGainIndex>();
+        preGain.setGainDecibels (value);
+    }
+    
+    void setPostGain(float value) {
+        auto& postGain = processorChain.template get<postGainIndex>();
+        postGain.setGainDecibels (value);
     }
 
 private:
@@ -331,6 +334,9 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
     
     void setDistortionEnabled (bool enabled);
+    void setPreGain(float value);
+    void setPostGain(float value);
+    
     AudioBufferQueue<float>& getAudioBufferQueue() noexcept;
 
 

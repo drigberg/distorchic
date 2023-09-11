@@ -199,6 +199,17 @@ void DisTorchicAudioProcessor::setDistortionEnabled (bool enabled) {
     fxChain.setBypassed<0>(!enabled);
 }
 
+void DisTorchicAudioProcessor::setPreGain(float value) {
+    auto& distortion = fxChain.template get<0>();
+    distortion.setPreGain(value);
+}
+
+void DisTorchicAudioProcessor::setPostGain(float value) {
+    auto& distortion = fxChain.template get<0>();
+    distortion.setPostGain(value);
+}
+
+
 AudioBufferQueue<float>& DisTorchicAudioProcessor::getAudioBufferQueue() noexcept {
     return audioBufferQueue;
 }

@@ -26,6 +26,28 @@ DisTorchicAudioProcessorEditor::DisTorchicAudioProcessorEditor (DisTorchicAudioP
     distortionToggle.addMouseListener (this, true);
     distortionToggle.setToggleState(true, 0);
     
+    addAndMakeVisible (preGainSlider);
+    preGainSlider.addListener(this);
+    preGainSlider.setTopLeftPosition(25, 100);
+    preGainSlider.setSize(200, 50);
+    preGainSlider.setRange (-50.0, 50.0);
+    preGainSlider.setValue(30.0);
+    
+    addAndMakeVisible (preGainSliderLabel);
+    preGainSliderLabel.setText ("Input Gain", juce::dontSendNotification);
+    preGainSliderLabel.setTopLeftPosition (250, 100);
+    
+    addAndMakeVisible (postGainSlider);
+    postGainSlider.addListener(this);
+    postGainSlider.setTopLeftPosition(25, 130);
+    postGainSlider.setSize(200, 50);
+    postGainSlider.setRange (-50.0, 50.0);
+    postGainSlider.setValue(-20.0);
+    
+    addAndMakeVisible (postGainSliderLabel);
+    postGainSliderLabel.setText ("Output Gain", juce::dontSendNotification);
+    postGainSliderLabel.setTopLeftPosition (250, 130);
+    
     distortionToggle.onClick = [this] {
         audioProcessor.setDistortionEnabled(distortionToggle.getToggleState());
     };
@@ -60,3 +82,14 @@ void DisTorchicAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
 }
+
+void DisTorchicAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
+{
+    if (slider == &preGainSlider) {
+        audioProcessor.setPreGain(preGainSlider.getValue());
+    }
+    else if (slider == &postGainSlider) {
+        audioProcessor.setPostGain(postGainSlider.getValue());
+    }
+}
+
